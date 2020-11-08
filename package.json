@@ -1,0 +1,19 @@
+{
+  "name": "typescript-express",
+  "version": "1.0.0",
+  "description": "This project demonstrates the basic usage of typescript in creating express based API's",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianferrao/typescript-express.git"
+  },
+  "author": "Brian Ferrao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brianferrao/typescript-express/issues"
+  },
+  "homepage": "https://github.com/brianferrao/typescript-express#readme"
+}
