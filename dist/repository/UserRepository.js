@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -50,78 +39,46 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
-var express_1 = __importDefault(require("express"));
-var User_1 = __importDefault(require("../../models/User"));
-var UserRepository_1 = require("../../repository/UserRepository");
-exports.userRouter = express_1.default.Router({
-    strict: true,
-});
-exports.userRouter.get('/', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, _b, e_1;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
-            case 0:
-                _c.trys.push([0, 2, , 3]);
-                _b = (_a = res).json;
-                return [4 /*yield*/, UserRepository_1.userRepository.getAll()];
-            case 1:
-                _b.apply(_a, [_c.sent()]);
-                return [3 /*break*/, 3];
-            case 2:
-                e_1 = _c.sent();
-                res.sendStatus(500);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); });
-exports.userRouter.get('/:id', function (req, res) {
-    User_1.default.findById(req.params.id, function (err, data) {
-        if (err) {
-            res.sendStatus(500);
-        }
-        else {
-            res.json(data);
-        }
-    });
-});
-exports.userRouter.post('/', function (req, res) {
-    var newUser = new User_1.default(__assign({}, req.body));
-    newUser.save(function (err, data) {
-        if (err) {
-            console.error("Error Occured: " + err);
-            res.sendStatus(500);
-        }
-        else {
-            res.json(data);
-        }
-    });
-});
-exports.userRouter.patch('/:id', function (req, res) {
-    User_1.default.findByIdAndUpdate(req.params.id, req.body, { new: true }, function (err, data) {
-        if (err) {
-            console.error("Error Occured: " + err);
-            res.sendStatus(500);
-        }
-        else {
-            res.json(data);
-        }
-    });
-});
-exports.userRouter.delete('/:id', function (req, res) {
-    User_1.default.findByIdAndDelete(req.params.id, function (err, data) {
-        if (err) {
-            console.error("Error Occured: " + err);
-            res.sendStatus(500);
-        }
-        else {
-            if (data) {
-                res.sendStatus(200);
-            }
-            else {
-                res.sendStatus(404);
-            }
-        }
-    });
-});
+exports.userRepository = void 0;
+var User_1 = __importDefault(require("../models/User"));
+var UserRepository = /** @class */ (function () {
+    function UserRepository() {
+    }
+    UserRepository.prototype.getAll = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+            var data, users, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, User_1.default.find().exec()];
+                    case 1:
+                        data = _a.sent();
+                        users = data.map(function (doc) {
+                            return {
+                                id: doc._id,
+                                firstName: doc.firstName,
+                                lastName: doc.lastName,
+                                age: doc.age,
+                                gender: doc.gender
+                            };
+                        });
+                        resolve(users);
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_1 = _a.sent();
+                        reject(e_1);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); });
+    };
+    // public save(user: User): User | null {
+    //   return null;
+    // }
+    UserRepository.prototype.delete = function (id) { };
+    return UserRepository;
+}());
+exports.userRepository = new UserRepository();
