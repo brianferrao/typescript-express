@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import User from '../../models/User';
-import { userRepository } from '../../repository/UserRepository';
+import { userRepository } from '../../repository';
 
 export const userRouter = express.Router({
   strict: true,

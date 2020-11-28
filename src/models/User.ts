@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Gender } from './enums/Gender';
+import { AddressSchema, IAddress} from './Address.model';
 
 export interface IUserDocument extends Document {
   id: string;
@@ -7,6 +8,7 @@ export interface IUserDocument extends Document {
   lastName: string;
   age: number;
   gender: Gender;
+  address: IAddress;
 }
 
 export const UserSchema = new Schema({
@@ -18,6 +20,7 @@ export const UserSchema = new Schema({
     enum: ['MALE', 'FEMALE', 'OTHERS'],
     default: 'OTHERS',
   },
+  address: AddressSchema
 });
 
 const User = mongoose.model<IUserDocument>('User', UserSchema);

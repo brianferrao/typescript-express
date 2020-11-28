@@ -1,7 +1,7 @@
 import UserDto from '../models/dtos/UserDto';
 import User, { IUserDocument } from '../models/User';
 
-class UserRepository {
+export default class UserRepository {
   public getAll(): Promise<UserDto[]> {
     return new Promise(async (resolve, reject) => {
       try{
@@ -31,7 +31,8 @@ class UserRepository {
           firstName: savedDocument.firstName,
           lastName: savedDocument.lastName,
           age: savedDocument.age,
-          gender: savedDocument.gender
+          gender: savedDocument.gender,
+          address: savedDocument.address
         });
       }catch(e) {
         reject(e);
@@ -42,4 +43,3 @@ class UserRepository {
   public delete(id: string): void {}
 }
 
-export const userRepository = new UserRepository();
