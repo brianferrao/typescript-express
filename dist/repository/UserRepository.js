@@ -75,9 +75,34 @@ var UserRepository = /** @class */ (function () {
             });
         }); });
     };
-    // public save(user: User): User | null {
-    //   return null;
-    // }
+    UserRepository.prototype.save = function (user) {
+        var _this = this;
+        return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+            var savedDocument, e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, new User_1.default(user).save()];
+                    case 1:
+                        savedDocument = _a.sent();
+                        resolve({
+                            id: savedDocument._id,
+                            firstName: savedDocument.firstName,
+                            lastName: savedDocument.lastName,
+                            age: savedDocument.age,
+                            gender: savedDocument.gender
+                        });
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_2 = _a.sent();
+                        reject(e_2);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); });
+    };
     UserRepository.prototype.delete = function (id) { };
     return UserRepository;
 }());

@@ -22,9 +22,22 @@ class UserRepository {
     });
   }
 
-  // public save(user: User): User | null {
-  //   return null;
-  // }
+  public save(user: UserDto): Promise<UserDto> {
+    return new Promise<UserDto>(async (resolve, reject) => {
+      try {
+        const savedDocument: IUserDocument = await new User(user).save();
+        resolve({
+          id: savedDocument._id,
+          firstName: savedDocument.firstName,
+          lastName: savedDocument.lastName,
+          age: savedDocument.age,
+          gender: savedDocument.gender
+        });
+      }catch(e) {
+        reject(e);
+      }
+    });
+  }
 
   public delete(id: string): void {}
 }

@@ -12,12 +12,6 @@ userRouter.get('/', async (req: Request, res: Response) => {
   }catch(e) {
     res.sendStatus(500);
   }
-  // try {
-  //   const data = await User.find().exec();
-  //   res.json(data);
-  // }catch(e) {
-  //   res.sendStatus(500);
-  // }
 });
 
 userRouter.get('/:id', (req: Request, res: Response) => {
@@ -30,18 +24,13 @@ userRouter.get('/:id', (req: Request, res: Response) => {
   });
 });
 
-userRouter.post('/', (req: Request, res: Response) => {
-  const newUser = new User({
-    ...req.body,
-  });
-  newUser.save((err, data) => {
-    if (err) {
-      console.error(`Error Occured: ${err}`);
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+userRouter.post('/', async (req: Request, res: Response) => {
+  try{
+    res.json(await userRepository.save(req.body));
+  }catch(e) {
+    res.status(500).send(e.message);
+    res.end();
+  }
 });
 
 userRouter.patch('/:id', (req: Request, res: Response) => {
